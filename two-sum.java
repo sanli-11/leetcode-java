@@ -1,7 +1,33 @@
 import java.util.Arrays;
+import java.util.HashMap;
 
 class Solution {
   public int[] twoSum(int[] nums, int target) {
+    if (nums.length < 1)
+      return new int[0];
+    else if (nums.length <= 1) {
+      if (nums[0] == target)
+        return new int[] { 0 };
+    }
+
+    HashMap<Integer, Integer> hashmap = new HashMap<>();
+
+    for (int i = 0; i < nums.length; i++) {
+      hashmap.put(nums[i], i);
+    }
+
+    for (int i = 0; i < nums.length - 1; i++) {
+      int remainder = target - nums[i];
+
+      if (hashmap.containsKey(remainder) && hashmap.get(remainder) != i) {
+        return new int[] { i, hashmap.get(remainder) };
+      }
+    }
+
+    return new int[0];
+  }
+
+  public int[] twoSumBruteForce(int[] nums, int target) {
     if (nums.length < 1) {
       return new int[0];
     } else if (nums.length < 2) {
