@@ -1,5 +1,42 @@
 public class LongestCommonPrefix {
+  public boolean commonPrefix(String[] strs, int len) {
+    String substring = strs[0].substring(0, len);
+
+    for (int i = 1; i < strs.length; i++) {
+      if (!strs[i].startsWith(substring))
+        return false;
+    }
+
+    return true;
+  }
+
   public String longestCommonPrefix(String[] strs) {
+    if (strs.length < 1)
+      return "";
+
+    int shortestWordLength = strs[0].length();
+
+    for (int i = 1; i < strs.length; i++) {
+      if (strs[i].length() < shortestWordLength)
+        shortestWordLength = strs[i].length();
+    }
+
+    int low = 1;
+    int high = shortestWordLength;
+
+    while (low <= high) {
+      int mid = (low + high) / 2;
+
+      if (commonPrefix(strs, mid))
+        low = mid + 1;
+      else
+        high = mid - 1;
+    }
+
+    return strs[0].substring(0, (low + high) / 2);
+  }
+
+  public String longestCommonPrefixUsingNestedLoop(String[] strs) {
     if (strs.length <= 1)
       return strs[0];
 
